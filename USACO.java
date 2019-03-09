@@ -21,42 +21,54 @@ public class USACO {
 			if(lineNumber==1) {
 				int lastNumber=0;
 			    for(int i=0;i<line.length();i++) {
-			         if(line.substring(i,i+1).equals("")) {
+			       if(line.substring(i,i+1).equals(" ")) {
 				     List.add(Integer.parseInt(line.substring(lastNumber,i)));
-				     lastNumber=i;
+						// System.out.println(List); // checks to see the list
+				     lastNumber=i+1;
 			          }
 			    }
+					List.add(Integer.parseInt(line.substring(line.length()-1,line.length())));
 			    R=List.get(0);
+				//	System.out.println(R);
 			    C=List.get(1);
+					//System.out.println(C);
 			    E=List.get(2);
+					//S/ystem.out.println(E);
 			    N=List.get(3);
+					//System.out.println(N);
 			    elevation=new int[R][C];
-			    instruction=new int[N];   //initializes the array according to the read file
+			    instruction=new int[N];   //initializes the array according to the read fil
 			    List.clear();
 		    }// ends of first line procedure
 			else if(lineNumber>=2 && lineNumber<=R+1) {
 				int lastNumber=0;
 				for(int i=0;i<line.length();i++) {
-					if(line.substring(i,i+1).equals("")) {
+					if(line.substring(i,i+1).equals(" ")) {
 						List.add(Integer.parseInt(line.substring(lastNumber,i)));
-						lastNumber=i;
+						lastNumber=i+1;
 					}
 				}
+				List.add(Integer.parseInt(line.substring(line.length()-1,line.length())));
 				for(int i=0;i<C;i++) {
 					elevation[lineNumber-2][i]=List.get(i);
 				}
+				System.out.println(print(elevation));
 				List.clear();
 			}
 			else if(lineNumber>=R+2 && lineNumber<=N+1) {
 				int lastNumber=0;
 				for(int i=0;i<line.length();i++) {
-					if(line.substring(i,i+1).equals("")) {
+					if(line.substring(i,i+1).equals(" ")) {
 						List.add(Integer.parseInt(line.substring(lastNumber,i)));
-						lastNumber=i;
+						lastNumber=i+1;
 					}
 				}
+				List.add(line.length()-1,line.length());
+				//System.out.println(Arrays.deepToString(elevation));
 				stomp(List.get(0),List.get(1),List.get(2),elevation);
+			//	System.out.println(Arrays.deepToString(elevation));
 			}
+			lineNumber++;
 		}// performs the stomps
 		for(int i=0;i<elevation.length;i++) {
 			for(int j=0;j<elevation[0].length;j++) {
@@ -106,6 +118,24 @@ public class USACO {
 		answer[0]=row;
 		answer[1]=col;
 		return answer;
+	}
+	public static String print(int[][]ary){
+		String ans="";
+		for(int i=0;i<ary.length;i++){
+			for(int j=0;j<ary[0].length;j++){
+				ans+=ary[i][j]+",";
+			}
+			ans+="\n";
+		}
+		return ans;
+	}
+	public static void main(String[]args){
+		try{
+		System.out.println(bronze("data.txt"));
+	}
+	catch(FileNotFoundException e){
+		System.out.println("make a valid file please");
+	}
 	}
 
 
