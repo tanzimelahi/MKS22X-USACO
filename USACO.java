@@ -27,7 +27,7 @@ public class USACO {
 				     lastNumber=i+1;
 			          }
 			    }
-					List.add(Integer.parseInt(line.substring(line.length()-1,line.length())));
+					List.add(Integer.parseInt(line.substring(lastNumber,line.length())));
 			    R=List.get(0);
 				//	System.out.println(R);
 			    C=List.get(1);
@@ -48,26 +48,34 @@ public class USACO {
 						lastNumber=i+1;
 					}
 				}
-				List.add(Integer.parseInt(line.substring(line.length()-1,line.length())));
-				for(int i=0;i<C;i++) {
+				List.add(Integer.parseInt(line.substring(lastNumber,line.length())));
+				for(int i=0;i<C;i++) {  // fills in the elevation array with the right inputs
 					elevation[lineNumber-2][i]=List.get(i);
 				}
-				System.out.println(print(elevation));
+			//	System.out.println(print(elevation));
 				List.clear();
 			}
-			else if(lineNumber>=R+2 && lineNumber<=N+1) {
+			else if(lineNumber>=R+2 && lineNumber<=R+N+1) {
+      //  System.out.println(line);
+      //  System.out.println(line.length());
 				int lastNumber=0;
 				for(int i=0;i<line.length();i++) {
 					if(line.substring(i,i+1).equals(" ")) {
 						List.add(Integer.parseInt(line.substring(lastNumber,i)));
 						lastNumber=i+1;
+          ///  System.out.println("i :"+i);
+            //System.out.println(List);
+          //  System.out.println("lastNumber:"+ lastNumber);
 					}
 				}
-				List.add(line.length()-1,line.length());
+				List.add(Integer.parseInt(line.substring(lastNumber,line.length())));
 				//System.out.println(Arrays.deepToString(elevation));
-				stomp(List.get(0),List.get(1),List.get(2),elevation);
-			//	System.out.println(Arrays.deepToString(elevation));
+				stomp(List.get(0)-1,List.get(1)-1,List.get(2),elevation);
+        //System.out.println(print(elevation));
+        List.clear();
+			   // performs stomps
 			}
+
 			lineNumber++;
 		}// performs the stomps
 		for(int i=0;i<elevation.length;i++) {
@@ -76,7 +84,7 @@ public class USACO {
 					elevation[i][j]=0;
 				}
 				else {
-					elevation[i][j]=E=elevation[i][j];
+					elevation[i][j]=E-elevation[i][j];
 				}
 			}
 		}
@@ -99,9 +107,10 @@ public class USACO {
 				}
 			}
 		}
+    //System.out.println(print(array));
 
 	}
-	public static int[]max(int[][]array,int r,int c){
+	public static int[]max(int[][]array,int r,int c){// searches for the greatest elevation in a 3 by 3 grid
 		int max=0;
 		int row=0;
 		int col=0;
@@ -129,14 +138,7 @@ public class USACO {
 		}
 		return ans;
 	}
-	public static void main(String[]args){
-		try{
-		System.out.println(bronze("data.txt"));
-	}
-	catch(FileNotFoundException e){
-		System.out.println("make a valid file please");
-	}
-	}
+
 
 
 }
