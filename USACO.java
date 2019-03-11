@@ -224,16 +224,6 @@ catch (FileNotFoundException e) {
    System.out.println("file doesn't exist");
     return -1;
 
+  }
+ }
 }
-  }
-
-  public static void main(String[]args){
-      //try{
-      System.out.println(silver("ctravel.txt"));
-    //}
-    //catch(FileNotFoundException e){
-
-    //}
-
-    }
-  }
