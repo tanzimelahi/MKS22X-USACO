@@ -6,7 +6,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 public class USACO {
-	public static int bronze(String filename)throws FileNotFoundException {
+	public static int bronze(String filename) {
+    try{
 		File text=new File(filename);
 		Scanner info=new Scanner(text);
 		int lineNumber=1;
@@ -95,6 +96,11 @@ public class USACO {
 			}
 		}
 		return 72*72*sum;
+  }
+  catch(FileNotFoundException e){
+    System.out.println("wrong file name");
+    return -1;
+  }
 	}
 	public static  void stomp(int row,int col,int d,int[][]array) {
 		int[] maximum=max(array,row,col);
@@ -138,7 +144,96 @@ public class USACO {
 		}
 		return ans;
 	}
+  // silver part
+  public static int silver(String filename) {
+try {
 
+    File document = new File(filename);
+    Scanner reciter = new Scanner(document);
 
+    int length = reciter.nextInt();
+    int width = reciter.nextInt();
+    int time = reciter.nextInt();
+
+    char[][] land = new char[length][width];
+    String line = reciter.nextLine();
+
+    for (int row = 0; row < land.length; row++) {
+        line = reciter.nextLine();
+
+         for (int col = 0; col < land[row].length; col++) {
+           land[row][col] = line.charAt(col);
+         }
+    }
+
+    int[] coordinates = new int[4];
+
+    for (int cell = 0; cell < coordinates.length; cell++) {
+       coordinates[cell] = reciter.nextInt() - 1;
+    }
+    int[][] past = new int[length][width];
+    int[][] current = new int[length][width];
+
+    for (int row = 0; row < land.length; row++) {
+          for (int col = 0; col < land[row].length; col++) {
+              if (land[row][col] == '*') {
+               past[row][col] = -1;
+              current[row][col] = -1;
+              }
+          }
+    }
+
+    current[coordinates[0]][coordinates[1]] = 1;
+
+  while (time > 0) {
+     for (int row = 0; row < land.length; row++) {
+       for (int col = 0; col < land[row].length; col++) {
+         past[row][col] = current[row][col];
+      }
+     }
+
+  for (int row = 0; row < current.length; row++) {
+      for (int col = 0; col < current[row].length; col++) {
+        if (current[row][col] != -1) {
+            current[row][col] = 0;
+
+            if (row - 1 >= 0 && current[row - 1][col] >= 0) {
+               current[row][col] += past[row - 1][col];
+             }
+          if (col - 1 >= 0 && current[row][col - 1] >= 0) {
+              current[row][col] += past[row][col - 1];
+          }
+
+          if (row + 1 < past.length && current[row + 1][col] >= 0) {
+            current[row][col] += past[row + 1][col];
+          }
+
+          if (col + 1 < past[row].length && current[row][col + 1] >= 0) {
+             current[row][col] += past[row][col + 1];
+          }
+      }
+    }
+  }
+  time--;
+}
+
+    return current[coordinates[2]][coordinates[3]];
+}
+
+catch (FileNotFoundException e) {
+   System.out.println("file doesn't exist");
+    return -1;
 
 }
+  }
+
+  public static void main(String[]args){
+      //try{
+      System.out.println(silver("ctravel.txt"));
+    //}
+    //catch(FileNotFoundException e){
+
+    //}
+
+    }
+  }
